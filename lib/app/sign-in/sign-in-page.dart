@@ -1,8 +1,13 @@
 import 'package:andreApp/app/sign-in/sign-in-button.dart';
-import 'package:andreApp/common-widgets/custom-raised-button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatelessWidget {
+  Future<void> _signInAnonymously() async {
+    final UserCredentials = FirebaseAuth.instance.signInAnonymously();
+    print(UserCredentials);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,9 +78,7 @@ class SignInPage extends StatelessWidget {
               text: 'go anonymous',
               textColor: Colors.white,
               color: Colors.lime[300],
-              onPressed: () {
-                print('button pressed');
-              },
+              onPressed: _signInAnonymously,
             ),
           ],
         ));
