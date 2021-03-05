@@ -1,17 +1,13 @@
 import 'package:andreApp/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key, @required this.auth, @required this.onSignedOut})
-      : super(key: key);
+  const HomePage({Key key, @required this.auth}) : super(key: key);
   final authBase auth;
-  final VoidCallback onSignedOut;
 
   Future<void> _signOut() async {
     try {
       await auth.signOut();
-      onSignedOut();
     } catch (e) {
       print(e.toString());
     }
