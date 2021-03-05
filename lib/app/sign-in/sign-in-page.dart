@@ -1,11 +1,21 @@
 import 'package:andreApp/app/sign-in/sign-in-button.dart';
+import 'package:andreApp/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatelessWidget {
+  const SignInPage({Key key, @required this.auth, @required this.onSignedIn})
+      : super(key: key);
+  final authBase auth;
+  final void Function(User) onSignedIn;
+
   Future<void> _signInAnonymously() async {
-    final UserCredentials = FirebaseAuth.instance.signInAnonymously();
-    print(UserCredentials);
+    try {
+      final user = await auth.signInAnonymously();
+      onSignedIn(user);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
