@@ -1,18 +1,29 @@
 import 'package:andreApp/app/sign-in/sign-in-button.dart';
 import 'package:andreApp/services/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({Key key, @required this.auth, @required this.onSignedIn})
-      : super(key: key);
+  const SignInPage({Key key, @required this.auth}) : super(key: key);
   final authBase auth;
-  final void Function(User) onSignedIn;
 
   Future<void> _signInAnonymously() async {
     try {
-      final user = await auth.signInAnonymously();
-      onSignedIn(user);
+      await auth.signInAnonymously();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      await auth.signInWithGoogle();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+   Future<void> _signInWithFacebook() async {
+    try {
+      await auth.signInWithFacebook();
     } catch (e) {
       print(e.toString());
     }
@@ -47,9 +58,7 @@ class SignInPage extends StatelessWidget {
               text: 'sign in with google',
               textColor: Colors.black87,
               color: Colors.white,
-              onPressed: () {
-                print('button pressed');
-              },
+              onPressed: _signInWithGoogle,
             ),
             SizedBox(
               height: 8.0,
@@ -58,9 +67,7 @@ class SignInPage extends StatelessWidget {
               text: 'sign in with facebook',
               textColor: Colors.white,
               color: Color(0XFF334D92),
-              onPressed: () {
-                print('button pressed');
-              },
+              onPressed: _signInWithFacebook,
             ),
             SizedBox(
               height: 8.0,
