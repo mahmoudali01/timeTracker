@@ -1,3 +1,4 @@
+import 'package:andreApp/app/sign-in/email-sign-in.dart';
 import 'package:andreApp/app/sign-in/sign-in-button.dart';
 import 'package:andreApp/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class SignInPage extends StatelessWidget {
       print(e.toString());
     }
   }
-   Future<void> _signInWithFacebook() async {
+
+  Future<void> _signInWithFacebook() async {
     try {
       await auth.signInWithFacebook();
     } catch (e) {
@@ -29,16 +31,25 @@ class SignInPage extends StatelessWidget {
     }
   }
 
+  void _signInWithEmail(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      fullscreenDialog: true,
+      builder: (context) => EmailSignIn(
+        auth: auth,
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: Text('Time Tracker')),
-      body: _buildContent(),
+      body: _buildContent(context),
       backgroundColor: Colors.grey[200],
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return Padding(
         //color: Colors.yellow,
         padding: EdgeInsets.all(16.0),
@@ -76,9 +87,7 @@ class SignInPage extends StatelessWidget {
               text: 'sign in with email',
               textColor: Colors.white,
               color: Colors.teal[700],
-              onPressed: () {
-                print('button pressed');
-              },
+              onPressed: () => _signInWithEmail(context),
             ),
             SizedBox(
               height: 8.0,
